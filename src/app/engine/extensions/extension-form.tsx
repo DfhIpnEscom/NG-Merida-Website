@@ -4,30 +4,35 @@ import Header from "@cloudscape-design/components/header";
 import Input from "@cloudscape-design/components/input";
 import Select from "@cloudscape-design/components/select";
 import { useCallback, useState } from "react";
+import { addButton, agentLabel, cleanButton, emptyStateLabel, extensionLabel, extensionPlaceholder, headerDescription, headerTitle, passwordLabel, passwordPlaceholder, removeButton, saveButton, selectLabel, selectPlaceholder, unknownLabel } from "./strings";
+import Box from "@cloudscape-design/components/box";
+import SpaceBetween from "@cloudscape-design/components/space-between";
+import Button from "@cloudscape-design/components/button";
 
-// interface ExtensionType {
-//     label: string;
-//     value: string;
-// };
-
-// interface Resource {
-//     extension: string;
-//     password: string;
-//     type: ExtensionType;
-//     index: number;
-// };
 
 export default function ExtensionForm(){
     const header = (
-        <Header
-            variant="h2"
-            description="Configure extensions, password and sort of extension"
-        >
-            Configure Extension
-        </Header>
+       <div>
+            <Box float="left">
+                <Header
+                    variant="h2"
+                    description={headerDescription}
+                >
+                    {headerTitle}
+                </Header>
+            </Box>
+            <Box float="right">
+                <SpaceBetween direction="horizontal" size="xs">
+                    <Button>{cleanButton}</Button>
+                    <Button variant="primary">
+                    {saveButton}
+                    </Button>
+                </SpaceBetween>
+            </Box>
+       </div>
     );
 
-    const updateResourceField = (item, field, value) => {
+    const updateResourceField = (item:Resource, field:string, value:string|ResourceType) => {
         const updateResources = [...resources];
         updateResources[item.index] = {
             ...item,
@@ -38,13 +43,13 @@ export default function ExtensionForm(){
 
     const formDefinition = [
         {
-            label: "Extension",
-            control: (item) => {
+            label: extensionLabel,
+            control: (item:Resource) => {
                 const [extension , setExtension] = useState(item.extension);
                 return (
                     <Input
                         value={extension}
-                        placeholder="Enter extension"
+                        placeholder={extensionPlaceholder}
                         type="text"
                         onChange={({ detail }) => {
                             const value = detail.value.replace(/[^0-9]/g, '');
@@ -53,39 +58,41 @@ export default function ExtensionForm(){
                         }}
                     />
                 );
-            }
+            },
+            errorText: (item:Resource) => !item.extension ? "Error message" : null
         },
         {
-            label: "Password",
-            control: (item) => {
+            label: passwordLabel,
+            control: (item:Resource) => {
                 const [password , setPassword] = useState(item.password);
                 return (
                     <Input
                         value={password}
-                        placeholder="Enter password"
+                        placeholder={passwordPlaceholder}
                         onChange={({ detail }) => {
                             updateResourceField(item, 'password', detail.value);
                             setPassword(detail.value)
                         }}
                     />
                 );
-            }
+            },
+            errorText: (item:Resource) => !item.password ? "Error message" : null
         },
         {
-            label: "Type",
-            control: (item) => {
+            label: selectLabel,
+            control: (item:Resource) => {
                 const [selectedType, setSelectedType ] = useState(item.type);
                 return (
                     <Select
                         selectedOption={selectedType}
                         options={[
-                            { label: "Agent", value: "0" },
-                            { label: "Supervisor", value: "1" },
-                            { label: "Unknown", value: "2" }
+                            { label: agentLabel, value: "0" },
+                            { label: passwordLabel, value: "1" },
+                            { label: unknownLabel, value: "2" }
                         ]}
-                        placeholder="Select type of extension"
+                        placeholder={selectPlaceholder}
                         onChange={({ detail }) => {
-                            updateResourceField(item, 'type', detail.selectedOption);
+                            updateResourceField(item, 'type', detail.selectedOption as ResourceType);
                             setSelectedType(detail.selectedOption)
                         }}
                     />
@@ -96,7 +103,7 @@ export default function ExtensionForm(){
 
     const [index, setIndex] = useState(0);
 
-    const [resources, setResources] = useState([]);
+    const [resources, setResources] = useState<Resource[]>([]);
     const removeExtension = useCallback(({ detail: { itemIndex } }) => {
         const tmpItems = [...resources];
         tmpItems.splice(itemIndex, 1);
@@ -109,7 +116,7 @@ export default function ExtensionForm(){
         >
         <AttributeEditor
             onAddButtonClick={() => {
-                const newResource = {
+                const newResource:Resource = {
                     extension: '',
                     password: '',
                     type: { label: "Unknown", value: "2" },
@@ -119,11 +126,11 @@ export default function ExtensionForm(){
                 setResources([...resources, newResource]);
             }}
             onRemoveButtonClick={removeExtension}
-            removeButtonText='Remove'
+            removeButtonText= {removeButton}
             items={resources}
-            addButtonText="Add new extension"
+            addButtonText={addButton}
             definition={formDefinition}
-            empty="No items associated with the resource."
+            empty={emptyStateLabel}
         />
       </Container>
     );

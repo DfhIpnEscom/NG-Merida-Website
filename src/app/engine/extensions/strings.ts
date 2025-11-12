@@ -1,0 +1,16 @@
+export const headerTitle = "Configute Extension";
+export const headerDescription = "Configure extensions ; password and extension type";
+export const extensionLabel = "Extension";
+export const extensionPlaceholder = "Enter extension";
+export const passwordLabel = "Password";
+export const passwordPlaceholder = "Enter password";
+export const selectLabel = "Type";
+export const agentLabel = "Agent";
+export const supervisorLabel = "Supervisor";
+export const unknownLabel = "Unknown";
+export const selectPlaceholder = "Select type of extension";
+export const removeButton = "Remove";
+export const addButton = "Add Extension";
+export const emptyStateLabel = "No items associated with the resource";
+export const cleanButton = "Clear all";
+export const saveButton = "Save changes";
