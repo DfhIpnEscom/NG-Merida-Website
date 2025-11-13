@@ -1,11 +1,19 @@
-interface Resource {
-    extension: string,
+import { agentLabel, supervisorLabel, unknownLabel } from "./strings"
+
+export interface Extension {
+    extensionId: string,
     password: string,
-    type:any,
-    index:number
+    label: string,
+    key: number
 }
 
-interface ResourceType {
+export interface ExtensionType {
     label: string,
     value: string
 }
+
+export const resourceTypeOptions:ResourceType[] = [
+    { label: agentLabel, value: "0" },
+    { label: supervisorLabel, value: "1" },
+    { label: unknownLabel, value: "2" }
+]
