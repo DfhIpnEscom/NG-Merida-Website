@@ -134,41 +134,19 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AppLayoutToolbar
-          breadcrumbs={
-            <BreadcrumbGroup
-              items={[
-                { text: 'Home', href: '#' },
-                { text: 'Service', href: '#' },
-              ]}
-            />
-          }
           navigationOpen={true}
           navigation={
             <SideNavigation
               header={{
                 href: '#',
-                text: 'Service name',
+                text: 'NG Merida WFO',
               }}
               items={sideNavigationMenu}
             />
           }
-          notifications={
-            <Flashbar
-              items={[
-                {
-                  type: 'info',
-                  content: 'This is an info flash message.',
-                  id: 'message_1',
-                },
-              ]}
-            />
-          }
-          toolsOpen={true}
-          tools={<HelpPanel header={<h2>Overview</h2>}>Help content</HelpPanel>}
           content={
             children
           }
-          splitPanel={<SplitPanel header="Split panel header">Split panel content</SplitPanel>}
         />
       </body>
     </html>

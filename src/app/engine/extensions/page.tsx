@@ -6,8 +6,10 @@ import SpaceBetween from "@cloudscape-design/components/space-between";
 import Header from "@cloudscape-design/components/header";
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import ExtensionForm from "./extension-form";
+import ExtensionForm from "./extensions-configuration";
 import Box from "@cloudscape-design/components/box";
+import ExtensionsConfiguration from "./extensions-configuration";
+import StatusIndicator from "@cloudscape-design/components/status-indicator";
 
 const NoSSRTableComponent = () => {
 
@@ -27,6 +29,21 @@ const NoSSRTableComponent = () => {
       header: "Label",
       cell: item => item.label,
     },
+    {
+      id: "status",
+      header: "Status",
+      cell: item => 
+      (
+        <StatusIndicator type="pending">
+          {item.status}
+        </StatusIndicator>
+      ),
+    },
+    {
+      id: "engineId",
+      header: "EngineId",
+      cell: item => item.engineId,
+    }
   ];
 
   const [data, setData] = useState([]);
@@ -88,7 +105,7 @@ const NoSSRTableComponent = () => {
           </Box>
         }
       />
-      <ExtensionForm />
+      <ExtensionsConfiguration />
     </SpaceBetween>
   );
 }

@@ -11,7 +11,7 @@ import Button from "@cloudscape-design/components/button";
 import { Extension, ExtensionType, resourceTypeOptions } from "./interfaces";
 
 
-export default function ExtensionForm(){
+export default function ExtensionsConfiguration(){
     const [extensions, setExtensions] = useState<Extension[]>([]);
     const hasErrors = extensions.some((item) => {
         return !item.extensionId || !item.password;
